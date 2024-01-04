@@ -5,10 +5,11 @@ import com.example.caso.entities.OS;
 import com.example.caso.servicesinterfaces.OsServiceInterfaces;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -24,4 +25,18 @@ public class OsController {
         grmpeS.insert(grmpE);
     }
 
+    @GetMapping("/lista")
+    public List<OsDTO> listar(){
+        return grmpeS.list().stream().map(x->{
+            ModelMapper m = new ModelMapper();
+            return m.map(x,OsDTO.class);
+        }).collect(Collectors.toList());
+    }
+
+    @PutMapping("/update")
+    public void modificar(@RequestBody OsDTO dto){
+        ModelMapper m = new ModelMapper();
+        OS os =m.map(dto,OS.class);
+        grmpeS.insert(os);
+    }
 }

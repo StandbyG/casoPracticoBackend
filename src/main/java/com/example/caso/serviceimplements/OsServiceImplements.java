@@ -23,5 +23,9 @@ public class OsServiceImplements implements OsServiceInterfaces {
         return grmpeR.findAll();
     }
 
+    @Override
+    public void update(int os) {
+    }
+
 
 }
